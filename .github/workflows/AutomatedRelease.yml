@@ -97,7 +97,7 @@ jobs:
 
     # Compiles the plugin
     - name: Compile the plugin
-      run: dotnet build ${{steps.generated-variables-1.outputs.solution}} /p:"Configuration=${{env.configuration}};Platform="${{env.platform}};VERSION=${{steps.project-version-string.outputs.Version}}"
+      run: dotnet build ${{steps.generated-variables-1.outputs.solution}} /p:"Configuration=${{env.configuration}};Platform=${{env.platform}};VERSION=${{steps.project-version-string.outputs.Version}}"
     
     - name: Upload publish artifacts
       uses: actions/upload-artifact@v2
