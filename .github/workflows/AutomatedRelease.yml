@@ -47,7 +47,7 @@ jobs:
       
     # Create repo user folder for the dependencies
     - name: Create repo user folder
-      run: New-Item -ItemType directory -Path ..\..\Squirrelies
+      run: New-Item -ItemType directory -Path ..\..
 
     # Checkout latest dependencies code
     - name: Checkout ProcessMemory
@@ -59,7 +59,7 @@ jobs:
 
     # GITHUB_WORKSPACE pathing is ass. Move this directory down one level.
     - name: Move ProcessMemory down a folder to work with existing csproj pathing
-      run: Move-Item -Path ProcessMemory -Destination ..\..\Squirrelies
+      run: Move-Item -Path ProcessMemory -Destination ..\..
 
     # Set some output variables
     - name: Set the main environment variables based on other environment variables
@@ -86,7 +86,7 @@ jobs:
     - name: Sets the zip-filename environment variable based on the project version
       id: generated-variables-2
       run: |
-        echo 'zip-filename=${{env.project-name}}-v${{steps.get_version.outputs.RELEASE_VERSION}}.zip' >> $env:GITHUB_OUTPUT
+        echo 'zip-filename=${{env.project-name}}-v${{steps.project-version-string.outputs.Version}}.zip' >> $env:GITHUB_OUTPUT
 
     # Install .NET
     - name: Setup .NET
@@ -97,7 +97,7 @@ jobs:
 
     # Compiles the plugin
     - name: Compile the plugin
-      run: dotnet build ${{steps.generated-variables-1.outputs.solution}} -c "${{env.configuration}}" /p:Platform="${{env.platform}}"
+      run: dotnet build ${{steps.generated-variables-1.outputs.solution}} /p:"Configuration=${{env.configuration}};Platform="${{env.platform}};VERSION=${{steps.project-version-string.outputs.Version}}"
     
     - name: Upload publish artifacts
       uses: actions/upload-artifact@v2
