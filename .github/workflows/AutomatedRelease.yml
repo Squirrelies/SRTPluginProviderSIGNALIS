@@ -45,9 +45,9 @@ jobs:
     - name: Move SRTHost down a folder to work with existing csproj pathing
       run: Move-Item -Path SRTHost -Destination ..\..\SpeedRunTool
       
-    # Create repo user folder for the dependencies
-    - name: Create repo user folder
-      run: New-Item -ItemType directory -Path ..\..
+    ## Create repo user folder for the dependencies
+    #- name: Create repo user folder
+    #  run: New-Item -ItemType directory -Path ..\..
 
     # Checkout latest dependencies code
     - name: Checkout ProcessMemory
